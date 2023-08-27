@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: cursive;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    form {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    label {
+      display: flex;
+      gap: 20px;
+    }
+
+    .success {
+      background: green;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      outline: none;
+    }
+
+    .danger {
+      background: red;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      outline: none;
+    }
+
+    .card__body {
+      border: 2px solid green;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app" v-cloak>
+    <h1>REST API</h1>
+    <form action="" @submit.prevent="createContact">
+      <label for="name">
+        <span>Имя</span>
+        <input type="text" id="name" v-model="form.name">
+      </label>
+      <label for="desc">
+        <span>Описание</span>
+        <input type="text" id="desc" v-model="form.desc">
+      </label>
+      <button type="submit" :disabled="!canCreate">Отправить</button>
+    </form>
+
+    <div v-if="contacts.length">
+      <div class="card" v-for="contact in contacts" ::key="contact">
+        <div class="card__body">
+          <h5 :style="{color: contact.marked ? 'red' : 'black'}">{{contact.name}}</h5>
+          <p>{{contact.desc}}</p>
+          <button class="success" :disabled="contact.marked" @click="markContact(contact.id)">Отметить</button>
+          <button class="danger" @click="removeContact(contact.id)">Удалить</button>
+        </div>
+      </div>
+    </div>
+    <p v-else>Данных нет</p>
+  </div>
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>
